@@ -2,7 +2,7 @@ package uk.tw.energy.builders;
 
 import uk.tw.energy.domain.ElectricityReading;
 import uk.tw.energy.domain.MeterReadings;
-import uk.tw.energy.generator.ElectricityReadingsGenerator;
+import uk.tw.energy.generator.RandomElectricityReadingsGenerator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,8 +24,8 @@ public class MeterReadingsBuilder {
     }
 
     public MeterReadingsBuilder generateElectricityReadings(int number) {
-        ElectricityReadingsGenerator readingsBuilder = new ElectricityReadingsGenerator();
-        this.electricityReadings = readingsBuilder.generate(number);
+        RandomElectricityReadingsGenerator readingsBuilder = new RandomElectricityReadingsGenerator();
+        this.electricityReadings = readingsBuilder.obtainReadings();
         return this;
     }
 

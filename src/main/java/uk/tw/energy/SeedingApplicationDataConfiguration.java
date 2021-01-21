@@ -41,7 +41,7 @@ public class SeedingApplicationDataConfiguration {
         final Map<String, List<ElectricityReading>> readings = new HashMap<>();
         smartMeterToPricePlanAccounts()
                 .keySet()
-                .forEach(smartMeterId -> readings.put(smartMeterId, electricityReadingsGenerator.obtainReadings(20)));
+                .forEach(smartMeterId -> readings.put(smartMeterId, electricityReadingsGenerator.obtainReadings()));
         return readings;
     }
 

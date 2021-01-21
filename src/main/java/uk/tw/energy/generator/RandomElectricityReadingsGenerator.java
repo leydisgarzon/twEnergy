@@ -15,12 +15,12 @@ import java.util.Random;
 public class RandomElectricityReadingsGenerator implements IElectricityReadingsProvider {
 
     @Override
-    public List<ElectricityReading> obtainReadings(int number) {
+    public List<ElectricityReading> obtainReadings() {
         List<ElectricityReading> readings = new ArrayList<>();
         Instant now = Instant.now();
 
         Random readingRandomiser = new Random();
-        for (int i = 0; i < number; i++) {
+        for (int i = 0; i < Constants.READINGS_PER_METER; i++) {
             double positiveRandomValue = Math.abs(readingRandomiser.nextGaussian());
             BigDecimal randomReading = BigDecimal.valueOf(positiveRandomValue).setScale(Constants.READINGS_SCALE, RoundingMode.CEILING);
             ElectricityReading electricityReading = new ElectricityReading(now.minusSeconds(i * Constants.SECONDS_ELAPSE_BETWEEN_READINGS), randomReading);

@@ -15,11 +15,11 @@ import java.util.List;
 public class StaticElectricityReadingsGenerator implements IElectricityReadingsProvider {
 
     @Override
-    public List<ElectricityReading> obtainReadings(int number) {
+    public List<ElectricityReading> obtainReadings() {
         List<ElectricityReading> readings = new ArrayList<>();
         Instant now = Instant.now();
 
-        for (int i = 0; i < number; i++) {
+        for (int i = 0; i < 5; i++) {
             BigDecimal randomReading = BigDecimal.valueOf(20L * i).setScale(Constants.READINGS_SCALE, RoundingMode.CEILING);
             ElectricityReading electricityReading = new ElectricityReading(now.minusSeconds(i * Constants.SECONDS_ELAPSE_BETWEEN_READINGS), randomReading);
             readings.add(electricityReading);

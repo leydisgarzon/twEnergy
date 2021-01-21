@@ -7,5 +7,5 @@ import java.util.List;
  * Electricity Readings Provider.
  */
 public interface IElectricityReadingsProvider {
-    List<ElectricityReading> obtainReadings(int number);
+    List<ElectricityReading> obtainReadings();
 }
