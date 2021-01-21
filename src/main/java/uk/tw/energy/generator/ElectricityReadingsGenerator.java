@@ -1,5 +1,6 @@
 package uk.tw.energy.generator;
 
+import uk.tw.energy.common.Constants;
 import uk.tw.energy.domain.ElectricityReading;
 
 import java.math.BigDecimal;
@@ -19,8 +20,8 @@ public class ElectricityReadingsGenerator {
         Random readingRandomiser = new Random();
         for (int i = 0; i < number; i++) {
             double positiveRandomValue = Math.abs(readingRandomiser.nextGaussian());
-            BigDecimal randomReading = BigDecimal.valueOf(positiveRandomValue).setScale(4, RoundingMode.CEILING);
-            ElectricityReading electricityReading = new ElectricityReading(now.minusSeconds(i * 10), randomReading);
+            BigDecimal randomReading = BigDecimal.valueOf(positiveRandomValue).setScale(Constants.READINGS_SCALE, RoundingMode.CEILING);
+            ElectricityReading electricityReading = new ElectricityReading(now.minusSeconds(i * Constants.SECONDS_ELAPSE_BETWEEN_READINGS), randomReading);
             readings.add(electricityReading);
         }
 
