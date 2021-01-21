@@ -2,6 +2,7 @@ package uk.tw.energy.generator;
 
 import uk.tw.energy.common.Constants;
 import uk.tw.energy.domain.ElectricityReading;
+import uk.tw.energy.interfaces.IElectricityReadingsProvider;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -11,9 +12,10 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Random;
 
-public class ElectricityReadingsGenerator {
+public class RandomElectricityReadingsGenerator implements IElectricityReadingsProvider {
 
-    public List<ElectricityReading> generate(int number) {
+    @Override
+    public List<ElectricityReading> obtainReadings(int number) {
         List<ElectricityReading> readings = new ArrayList<>();
         Instant now = Instant.now();
 

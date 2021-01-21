@@ -2,13 +2,15 @@ package uk.tw.energy;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 import uk.tw.energy.domain.ElectricityReading;
 import uk.tw.energy.domain.PricePlan;
-import uk.tw.energy.generator.ElectricityReadingsGenerator;
+import uk.tw.energy.generator.RandomElectricityReadingsGenerator;
+import uk.tw.energy.interfaces.IElectricityReadingsProvider;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -35,12 +37,11 @@ public class SeedingApplicationDataConfiguration {
     }
 
     @Bean
-    public Map<String, List<ElectricityReading>> perMeterElectricityReadings() {
+    public Map<String, List<ElectricityReading>> perMeterElectricityReadings(IElectricityReadingsProvider electricityReadingsGenerator) {
         final Map<String, List<ElectricityReading>> readings = new HashMap<>();
-        final ElectricityReadingsGenerator electricityReadingsGenerator = new ElectricityReadingsGenerator();
         smartMeterToPricePlanAccounts()
                 .keySet()
-                .forEach(smartMeterId -> readings.put(smartMeterId, electricityReadingsGenerator.generate(20)));
+                .forEach(smartMeterId -> readings.put(smartMeterId, electricityReadingsGenerator.obtainReadings(20)));
         return readings;
     }
 
@@ -61,5 +62,11 @@ public class SeedingApplicationDataConfiguration {
         ObjectMapper objectMapper = builder.createXmlMapper(false).build();
         objectMapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
         return objectMapper;
+    }
+
+    @Bean
+    @ConditionalOnMissingBean
+    public IElectricityReadingsProvider randomElectricityReadingsGenerator() {
+        return new RandomElectricityReadingsGenerator();
     }
 }
