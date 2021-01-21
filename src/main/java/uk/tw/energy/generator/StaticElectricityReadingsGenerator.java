@@ -19,7 +19,6 @@ public class StaticElectricityReadingsGenerator implements IElectricityReadingsP
         List<ElectricityReading> readings = new ArrayList<>();
         Instant now = Instant.now();
 
-        System.out.println("Getting readings from StaticElectricityReadingsGenerator");
         for (int i = 0; i < number; i++) {
             BigDecimal randomReading = BigDecimal.valueOf(20L * i).setScale(Constants.READINGS_SCALE, RoundingMode.CEILING);
             ElectricityReading electricityReading = new ElectricityReading(now.minusSeconds(i * Constants.SECONDS_ELAPSE_BETWEEN_READINGS), randomReading);
