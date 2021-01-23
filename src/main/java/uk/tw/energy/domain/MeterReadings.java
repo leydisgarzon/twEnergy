@@ -1,10 +1,14 @@
 package uk.tw.energy.domain;
 
+import javax.validation.constraints.NotEmpty;
 import java.util.List;
 
 public class MeterReadings {
 
+    @NotEmpty(message = "Smart meter list of readings is required. Must not be empty.")
     private List<ElectricityReading> electricityReadings;
+
+    @NotEmpty(message = "Smart meter id is required. Must not be empty.")
     private String smartMeterId;
 
     public MeterReadings() { }
